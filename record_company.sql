@@ -67,6 +67,44 @@ WHERE release_year IS NULL;
 DELETE FROM albums
 WHERE id = 5;
 
+-- Inner join table written first is on left
+SELECT * FROM bands 
+INNER JOIN albums ON bands.id = albums.band_id;
+
+-- Left join everything from the left side 
+SELECT * FROM bands 
+LEFT JOIN albums ON bands.id = albums.band_id;
+
+-- right join everything from the left side 
+SELECT * FROM albums
+RIGHT JOIN bands ON bands.id = albums.band_id;
+
+-- aggregate functions
+SELECT AVG(release_year) FROM albums;
+
+SELECT SUM(release_year) FROM albums;
+
+-- Count and groupby. Aggregate works on the whole
+
+SELECT band_id, COUNT(band_id) from albums
+GROUP BY band_id; 
+
+
+-- Talk about column we want to select
+SELECT b.name AS band_name, COUNT(a.id) as num_albums
+FROM bands AS b 
+LEFT JOIN albums AS a ON b.id = a.band_id
+GROUP by b.id;
+
+
+-- Select when num_albums = 1 Having happens after Groupby
+SELECT b.name AS band_name, COUNT(a.id) as num_albums
+FROM bands AS b 
+LEFT JOIN albums AS a ON b.id = a.band_id
+WHERE b.name = 'Deuce'
+GROUP by b.id
+HAVING num_albums = 1;
+
 
 
 
